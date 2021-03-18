@@ -1,12 +1,11 @@
-name: "Terraform"
+name: "Test prod push, pull_request, release"
 
 on:
   push:
     branches:
       - prod
+  pull_request:
   release:
-    types:
-      - created
 
 jobs:
   terraform:
@@ -24,5 +23,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Run echo
+      - name: Show github event
+        run: echo "${{ github.event }}"
+
+      - name: Run push
+        if: github.event == 'push'
+        run: echo "Release on prod"
+
+      - name: Run pull_request
+        if: github.event == 'pull_request'
+        run: echo "Release on prod"
+
+      - name: Run release
+        if: github.event == 'release'
         run: echo "Release on prod"
