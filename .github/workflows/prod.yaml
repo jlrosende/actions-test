@@ -23,8 +23,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Show github event
-        run: echo "${{ github.event.type }}"
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: |
+          echo "$GITHUB_CONTEXT"
 
       - name: Run push
         if: ${{ github.event.type }} == 'push'
