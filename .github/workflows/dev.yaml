@@ -22,5 +22,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Run echo
-        run: echo "Push on dev or pre"
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: |
+          echo "$GITHUB_CONTEXT"
