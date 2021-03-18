@@ -22,5 +22,5 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Run echo
-        run: echo "Push on dev or pre"
+      - name: Show github event
+        run: echo "${{ github.event.type }}"

@@ -19,5 +19,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Show github event
+        run: echo "${{ github.event.type }}"
+
       - name: Run echo
         run: echo "Release all branches"
