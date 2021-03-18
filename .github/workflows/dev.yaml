@@ -7,10 +7,10 @@ on:
       - pre
 
 jobs:
-  terraform:
+  pre_enviroment:
     name: "Terraform"
     runs-on: ubuntu-latest
-    environment: production
+    environment: pre
 
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
@@ -27,3 +27,30 @@ jobs:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         run: |
           echo "$GITHUB_CONTEXT"
+
+      - name: Run echo
+        run: echo "${{ secrets.SECRETO_SUPER_SEGURO }}"
+
+  prod_enviroment:
+    name: "Terraform"
+    runs-on: ubuntu-latest
+    environment: prod
+
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      # Checkout the repository to the GitHub Actions runner
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: |
+          echo "$GITHUB_CONTEXT"
+
+      - name: Run echo
+        run: echo "${{ secrets.SECRETO_SUPER_SEGURO }}"
