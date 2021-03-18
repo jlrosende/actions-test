@@ -31,7 +31,7 @@ jobs:
       - name: Run echo
         run: echo "${{ secrets.SECRETO_SUPER_SEGURO }}"
 
-  prod_enviroment:
+  dev_enviroment:
     name: "Dev Enviroment"
     runs-on: ubuntu-latest
     environment: dev
