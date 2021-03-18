@@ -30,13 +30,13 @@ jobs:
           echo "$GITHUB_CONTEXT"
 
       - name: Run push
-        if: ${{ github.event_name }} == 'push'
-        run: echo "Release on prod"
+        if: ${{ github.event_name == 'push' }}
+        run: echo "push on prod"
 
       - name: Run pull_request
-        if: ${{ github.event_name }} == 'pull_request'
-        run: echo "Release on prod"
+        if: ${{ github.event_name  == 'pull_request' }}
+        run: echo "pull_request on prod"
 
       - name: Run release
-        if: ${{ github.event_name }} == 'release'
-        run: echo "Release on prod"
+        if: ${{ github.event_name == 'release' }}
+        run: echo "release on prod"
