@@ -1,4 +1,4 @@
-name: "Terraform"
+name: "Test dev and pre push"
 
 on:
   push:
