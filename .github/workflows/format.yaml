@@ -14,10 +14,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: terraform fmt
-        uses: dflook/terraform-fmt@v1
-        with:
-          path: terraform
+      # - name: terraform fmt
+      #   uses: dflook/terraform-fmt@v1
+      #   with:
+      #     path: terraform
+
+      - name: Terraform fmt
+        id: fmt
+        run: terraform fmt
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v2
