@@ -9,7 +9,7 @@ jobs:
   pull_request_prod:
     name: "Pull Request"
     runs-on: ubuntu-latest
-    environment: prod
+    environment: pre
 
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
