@@ -1,17 +1,15 @@
-name: "Test prod push, pull_request, release"
+name: "Test prod pull_request"
 
 on:
-  push:
+  pull_request:
     branches:
       - prod
-  pull_request:
-  release:
 
 jobs:
-  terraform:
-    name: "Terraform"
+  pull_request_prod:
+    name: "Pull Request"
     runs-on: ubuntu-latest
-    environment: production
+    environment: pre
 
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
@@ -29,14 +27,5 @@ jobs:
         run: |
           echo "$GITHUB_CONTEXT"
 
-      - name: Run push
-        if: ${{ github.event_name == 'push' }}
-        run: echo "push on prod"
-
-      - name: Run pull_request
-        if: ${{ github.event_name  == 'pull_request' }}
-        run: echo "pull_request on prod"
-
       - name: Run release
-        if: ${{ github.event_name == 'release' }}
         run: echo "release on prod"
