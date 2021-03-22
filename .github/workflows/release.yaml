@@ -1,13 +1,15 @@
-name: "Terraform"
+name: "Release"
 
 on:
   release:
+    branches:
+      - prod
 
 jobs:
   terraform:
     name: "Terraform"
     runs-on: ubuntu-latest
-    environment: production
+    environment: prod
 
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
@@ -18,6 +20,12 @@ jobs:
       # Checkout the repository to the GitHub Actions runner
       - name: Checkout
         uses: actions/checkout@v2
+
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: |
+          echo "$GITHUB_CONTEXT"
 
       - name: Run echo
         run: echo "Release all branches"
