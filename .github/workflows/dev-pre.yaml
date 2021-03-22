@@ -8,6 +8,7 @@ on:
 
 jobs:
   pre_enviroment:
+    if: github.ref == 'refs/heads/pre'
     name: "Pre Enviroment"
     runs-on: ubuntu-latest
     environment: pre
@@ -32,11 +33,11 @@ jobs:
         run: echo "${{ secrets.SECRETO_SUPER_SEGURO }}"
 
   dev_enviroment:
+    if: github.ref == 'refs/heads/dev'
     name: "Dev Enviroment"
     runs-on: ubuntu-latest
     environment: dev
 
-    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
     defaults:
       run:
