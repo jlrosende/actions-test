@@ -1,0 +1,46 @@
+name: "Terraform linter"
+
+on:
+  push:
+
+jobs:
+  format:
+    name: "Terraform Format"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Scan Code Base
+        id: scan
+        uses: github/super-linter@v3
+        env:
+          VALIDATE_ALL_CODEBASE: true
+          DEFAULT_BRANCH: master
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VALIDATE_TERRAFORM_TERRASCAN: true
+
+      - name: Dump GitHub context
+        env:
+          SCAN_OUTPUTS: ${{ toJson(steps.scan) }}
+        run: |
+          echo "$SCAN_OUTPUTS"
+      # - uses: actions/github-script@0.9.0
+      #   env:
+      #     SCAN: "terraform\n${{ steps.scan.outputs.stdout }}"
+      #   with:
+      #     github-token: ${{ secrets.GITHUB_TOKEN }}
+      #     script: |
+      #       const output = `#### Terraform Format and Style 🖌\`${{ steps.fmt.outcome }}\`
+      #       #### Terraform Initialization ⚙️\`${{ steps.init.outcome }}\`
+      #       #### Terrascan Check 🔎\`${{ steps.scan.outcome }}\`
+      #       <details><summary>Show Terrascan Result</summary>
+      #       \`\`\`${process.env.SCAN}\`\`\`
+      #       </details>
+      #       *Pusher: @${{ github.actor }}, Action: \`${{ github.event_name }}\`, Working Directory: \`${{ env.tf_actions_working_dir }}\`, Workflow: \`${{ github.workflow }}\`*`;
+      #       github.issues.createComment({
+      #         owner: context.repo.owner,
+      #         repo: context.repo.repo,
+      #         body: output
+      #       })
