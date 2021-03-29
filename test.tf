@@ -14,7 +14,7 @@ provider "docker" {
 
 # Create a container
 resource "docker_container" "foo" {
-  image = 
+  image = docker_image.ubuntu.latest
   name  = "foo"
 }
 

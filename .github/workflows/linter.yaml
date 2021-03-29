@@ -23,7 +23,7 @@ jobs:
 
       - name: Dump GitHub context
         env:
-          SCAN_OUTPUTS: ${{ toJson(steps.scan) }}
+          SCAN_OUTPUTS: ${{ toJson(github.files) }}
         run: |
           echo "$SCAN_OUTPUTS"
       # - uses: actions/github-script@0.9.0
