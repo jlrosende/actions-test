@@ -20,6 +20,8 @@ jobs:
           DEFAULT_BRANCH: master
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           VALIDATE_TERRAFORM_TERRASCAN: true
+          VALIDATE_BASH: true
+          VALIDATE_BASH_EXEC: true
 
       - name: Dump GitHub context
         env:
