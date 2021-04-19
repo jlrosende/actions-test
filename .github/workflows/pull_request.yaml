@@ -21,6 +21,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Check incoming branch
+        if: github.head_ref != "dev"
+        run: exit 1
+
       - name: Dump GitHub context
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
