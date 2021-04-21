@@ -38,8 +38,8 @@ jobs:
     name: "Merge pr"
     runs-on: ubuntu-latest
     steps:
-      - name: merge pr
-        uses: pascalgn/automerge-action@v0.13.1
-        env:
-          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-          MERGE_LABELS: automerge
+      - uses: reitermarkus/automerge@v2
+        with:
+          token: ${{ secrets.MY_GITHUB_TOKEN }}
+          merge-method: merge
+          required-labels: automerge
