@@ -1,0 +1,22 @@
+name: "Terraform release"
+
+on:
+  pull_request:
+
+jobs:
+  terraform:
+    name: "Terraform release"
+    runs-on: ubuntu-latest
+    environment: pro
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 0.13.6
+
+      - name: Terraform Validate
+        id: validate
+        run: terraform validate -no-colo
