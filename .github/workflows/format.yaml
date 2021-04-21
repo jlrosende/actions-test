@@ -1,0 +1,33 @@
+name: "Terraform Format"
+
+on:
+  push:
+    branches-ignore:
+      - master
+      - automated-terraform-fmt
+
+jobs:
+  format:
+    name: "Terraform Format"
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 0.13.6
+
+      - name: Terraform fmt
+        id: fmt
+        run: terraform fmt
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v3.8.2
+        with:
+          commit-message: terraform fmt
+          title: Reformat terraform files
+          body: Update terraform files to canonical format using `terraform fmt`
+          branch: automated-terraform-fmt
