@@ -31,3 +31,15 @@ jobs:
           title: Reformat terraform files
           body: Update terraform files to canonical format using `terraform fmt`
           branch: automated-terraform-fmt
+          labels: automerge
+
+  automerge:
+    needs: format
+    name: "Merge pr"
+    runs-on: ubuntu-latest
+    steps:
+      - name: merge pr
+        uses: pascalgn/automerge-action@v0.13.1
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          MERGE_LABELS: automerge
