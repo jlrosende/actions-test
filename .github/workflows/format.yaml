@@ -38,7 +38,7 @@ jobs:
     name: "Merge pr"
     runs-on: ubuntu-latest
     steps:
-      - uses: reitermarkus/automerge@v2
+      - uses: reitermarkus/automerge@v1.5.2
         with:
           token: ${{ secrets.MY_GITHUB_TOKEN }}
           merge-method: merge
