@@ -25,4 +25,4 @@ jobs:
             type=ref,event=branch
             type=ref,event=tag
             type=sha,prefix={{branch}}-
-            type=raw,value={{branch}}-
+            type=raw,value={{branch}}
