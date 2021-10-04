@@ -1,0 +1,28 @@
+name: "[Push int] Build image and push"
+
+on:
+  push:
+    branches:
+      - int
+    tags:
+      - "test-*.*.*"
+
+jobs:
+  build_push:
+    name: "Build and puhs int branch"
+    runs-on: ubuntu-latest
+    environment: int
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v3
+        with:
+          images: eu.gcr.io//collecting-data
+          flavor: |
+            latest=false
+          tags: |
+            type=ref,event=branch
+            type=ref,event=tag
