@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - int
-    tags:
-      - "test-*.*.*"
 
 jobs:
   build_push:
@@ -26,5 +24,5 @@ jobs:
           tags: |
             type=ref,event=branch
             type=ref,event=tag
-            type=sha
-            type=raw,value=int
+            type=sha,prefix={{branch}}-
+            type=raw,value={{branch}}
