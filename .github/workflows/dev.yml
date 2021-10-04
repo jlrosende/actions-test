@@ -1,0 +1,31 @@
+name: "[Push dev] Build image and push"
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  build_push:
+    name: "Build and puhs dev branch"
+    runs-on: ubuntu-latest
+    environment: dev
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v3
+        with:
+          images: eu.gcr.io//collecting-data
+          flavor: |
+            latest=false
+          tags: |
+            type=sha
+
+      - name: Print metadata
+        run: |
+          echo ${{ steps.meta.outputs.tags }}
+          echo ${{ steps.meta.outputs.labels }}
+          echo ${{ steps.meta.outputs.version }}
