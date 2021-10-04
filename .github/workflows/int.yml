@@ -24,8 +24,5 @@ jobs:
           tags: |
             type=ref,event=branch
             type=ref,event=tag
-<<<<<<< Updated upstream
-=======
-            type=sha,prefix={{branch}}--
+            type=sha,prefix={{branch}}-
             type=raw,value={{branch}}-
->>>>>>> Stashed changes
