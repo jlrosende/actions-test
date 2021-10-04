@@ -2,8 +2,6 @@ name: "[Push pro] Build image and push"
 
 on:
   push:
-    branches:
-      - master
     tags:
       - "v*.*.*"
 
@@ -22,7 +20,9 @@ jobs:
         with:
           images: eu.gcr.io//collecting-data
           flavor: |
-            latest=false
+            latest=true
           tags: |
             type=ref,event=branch
             type=ref,event=tag
+            type=sha,prefix={{branch}}-
+            type=raw,value={{branch}}
