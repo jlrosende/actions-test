@@ -2,8 +2,8 @@ name: "[Push int] Build image and push"
 
 on:
   push:
-    branches:
-      - int
+    tags:
+      - "*"
 
 jobs:
   build_push:
@@ -22,19 +22,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           WITH_V: true
-          DEFAULT_BUMP: patch
-          RELEASE_BRANCHES: test
+          DRY_RUN: true
 
       - name: Docker meta
         id: meta
         uses: docker/metadata-action@v3
         with:
-          images: eu.gcr.io//collecting-data
-          flavor: |
-            latest=false
-          tags: |
-            type=ref,event=branch
-            type=ref,event=tag
-            type=sha,prefix={{branch}}-
-            type=raw,value={{branch}}
-            type=semver,pattern={{raw}},value=${{ steps.tag.outputs.new_tag }}-dev
+          images: eu.gcr.io/test/collecting-data
