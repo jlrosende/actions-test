@@ -22,7 +22,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           WITH_V: true
-          TAG_CONTEXT: branch
           DEFAULT_BUMP: patch
           RELEASE_BRANCHES: test
 
