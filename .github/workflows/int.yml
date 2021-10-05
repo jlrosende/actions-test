@@ -23,7 +23,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           WITH_V: true
           DEFAULT_BUMP: patch
-          RELEASE_BRANCHES: test
+          PRERELEASE_SUFFIX: test
 
       - name: Docker meta
         id: meta
