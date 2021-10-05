@@ -7,7 +7,7 @@ on:
 
 jobs:
   build_push:
-    name: "Build and push dev branch"
+    name: "Build and push DEV branch"
     runs-on: ubuntu-latest
     environment: dev
 
