@@ -7,22 +7,20 @@ on:
 
 jobs:
   build_push:
-    name: "Build and puhs dev branch"
+    name: "Build and push dev branch"
     runs-on: ubuntu-latest
     environment: dev
 
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: "0"
 
       - name: Docker meta
         id: meta
         uses: docker/metadata-action@v3
         with:
-          images: eu.gcr.io//collecting-data
-          flavor: |
-            latest=false
+          images: eu.gcr.io/test/collecting-data
           tags: |
+            type=sha,prefix=dev-
             type=ref,event=branch
-            type=ref,event=tag
-            type=sha,prefix={{branch}}-
-            type=raw,value={{branch}}
