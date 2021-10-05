@@ -23,7 +23,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           WITH_V: true
           DEFAULT_BUMP: patch
-          PRERELEASE_SUFFIX: dev
+          RELEASE_BRANCHES: dev
 
       - name: Docker meta
         id: meta
@@ -33,4 +33,4 @@ jobs:
           tags: |
             type=sha,prefix=dev-
             type=ref,event=branch
-            type=semver,pattern={{raw}},value=${{ steps.tag.outputs.new_tag }}
+            type=semver,pattern={{raw}},value=dev-${{ steps.tag.outputs.new_tag }}
