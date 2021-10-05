@@ -17,11 +17,13 @@ jobs:
           fetch-depth: "0"
 
       - name: Bump version and push tag
+        id: tag
         uses: anothrNick/github-tag-action@1.36.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           WITH_V: true
-          DRY_RUN: true
+          DEFAULT_BUMP: patch
+          RELEASE_BRANCHES: test
 
       - name: Docker meta
         id: meta
@@ -35,3 +37,4 @@ jobs:
             type=ref,event=tag
             type=sha,prefix={{branch}}-
             type=raw,value={{branch}}
+            type=semver,pattern={{raw}},value=${{ steps.tag.outputs.new_tag }}-dev
