@@ -8,7 +8,7 @@ on:
 
 jobs:
   build_push:
-    name: "Build and puhs pro branch"
+    name: "Build and push pro branch"
     runs-on: ubuntu-latest
     environment: pro
 
