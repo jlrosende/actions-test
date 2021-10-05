@@ -1,15 +1,15 @@
-name: "[Push dev] Build image and push"
+name: "[Push int] Build image and push"
 
 on:
   push:
-    branches:
-      - dev
+    tags:
+      - "*"
 
 jobs:
   build_push:
-    name: "Build and puhs dev branch"
+    name: "Build and puhs int branch"
     runs-on: ubuntu-latest
-    environment: dev
+    environment: int
 
     steps:
       - uses: actions/checkout@v2
@@ -17,8 +17,15 @@ jobs:
           fetch-depth: "0"
 
       - name: Bump version and push tag
+        id: tag
         uses: anothrNick/github-tag-action@1.36.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           WITH_V: true
-          TAG_CONTEXT: branch
+          DRY_RUN: true
+
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v3
+        with:
+          images: eu.gcr.io/test/collecting-data

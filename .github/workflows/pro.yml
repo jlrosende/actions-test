@@ -1,9 +1,10 @@
 name: "[Push pro] Build image and push"
 
 on:
-  release:
-    types:
-      - published
+  push:
+    branches:
+      - main
+      - master
 
 jobs:
   build_push:
@@ -14,8 +15,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Docker meta
-        id: meta
-        uses: docker/metadata-action@v3
-        with:
-          images: eu.gcr.io//collecting-data
+      - name: Bump version and push tag
+        uses: anothrNick/github-tag-action@1.36.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          WITH_V: true
+          DRY_RUN: true
