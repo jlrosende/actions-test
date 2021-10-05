@@ -1,4 +1,4 @@
-name: "[Push pro] Build image and push"
+name: "[Published RELEASE] Build image and push"
 
 on:
   release:
@@ -7,7 +7,7 @@ on:
 
 jobs:
   build_push:
-    name: "Build and push pro branch"
+    name: "Build and push RELEASE"
     runs-on: ubuntu-latest
     environment: pro
 
