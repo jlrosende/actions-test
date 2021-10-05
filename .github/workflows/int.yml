@@ -29,12 +29,10 @@ jobs:
         id: meta
         uses: docker/metadata-action@v3
         with:
-          images: eu.gcr.io//collecting-data
+          images: eu.gcr.io/test/collecting-data
           flavor: |
             latest=false
           tags: |
             type=ref,event=branch
-            type=ref,event=tag
             type=sha,prefix={{branch}}-
-            type=raw,value={{branch}}
-            type=semver,pattern={{raw}},value=${{ steps.tag.outputs.new_tag }}-dev
+            type=semver,pattern={{raw}},value=${{ steps.tag.outputs.new_tag }}
