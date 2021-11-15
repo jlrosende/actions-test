@@ -37,7 +37,7 @@ jobs:
           vars=$(echo '${{ secrets.tf_vars }}' | jq -r 'to_entries[] | "\(.key)=\(.value)"')
           for v in $vars; 
           do            
-            echo "::add-mask::$v"
+            echo "::add-mask::${v#*-}"
             echo $v >> $GITHUB_ENV
           done
 
