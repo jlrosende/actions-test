@@ -28,13 +28,11 @@ jobs:
       - name: Inputs
         run: echo "${{ toJson(inputs.tf_vars) }}"
 
-      - name: GitHub Context
-        run: echo "${{ toJson(github) }}"
-
       - name: Setup env
         run: >
-          vars=$(echo "${{ toJson(inputs.tf_vars) }}" | jq -r 'to_entries[] | "\(.key)=\(.value)"')
-          for v in $vars; do            
+          vars=$(echo "${{ inputs.tf_vars }}" | jq -r 'to_entries[] | "\(.key)=\(.value)"')
+          for v in $vars; 
+          do            
             echo $v >> $GITHUB_ENV
           done
 
