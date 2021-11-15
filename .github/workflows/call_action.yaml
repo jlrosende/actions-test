@@ -5,7 +5,7 @@ on:
 
 jobs:
   pre-pull-request:
-    uses: jlrosende/actions-test/.github/workflows/reusable_action.yaml@master
+    uses: ./.github/workflows/reusable_action.yaml@master
     with:
       environment: pre
       tf_vars: |
