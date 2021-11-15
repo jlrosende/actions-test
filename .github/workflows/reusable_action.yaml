@@ -6,11 +6,6 @@ on:
         default: ubuntu-latest
         required: false
         type: string
-      tf_vars:
-        description: Terraform variables
-        default: ""
-        required: false
-        type: string
       environment:
         description: Terraform environment
         required: true
@@ -32,9 +27,11 @@ jobs:
         run: echo "${{ toJson(github) }}"
 
       - name: Setup env
-        uses: jwulf/add-env-vars-action@master
-        with:
-          map: ${{ tojson(inputs) }}
+        run: |
+          vars=$(echo "${{ toJson(inputs) }}" | jq -r 'to_entries[] | "\(.key)=\(.value)"')
+          for v in $vars; do            
+            echo $v >> $GITHUB_ENV
+          done
 
       - name: GitHub Env Vars
         run: echo "${GITHUB_ENV}""
