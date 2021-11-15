@@ -8,5 +8,5 @@ jobs:
     uses: jlrosende/actions-test/.github/workflows/reusable_action.yaml@dev
     with:
       environment: pre
-      TF_VAR_AUTHORIZATION: ${{ secrets.AUTHORIZATION }}
-      TF_VAR_PROJECTID: ${{ secrets.PROJECTID }}
+      TF_VAR_AUTHORIZATION: "${{ secrets.AUTHORIZATION }}"
+      TF_VAR_PROJECTID: "${{ secrets.PROJECTID }}"
