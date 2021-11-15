@@ -8,4 +8,4 @@ jobs:
     uses: jlrosende/actions-test/.github/workflows/reusable_action.yaml@dev
     with:
       environment: pre
-      tf_vars: ${{ secrets.tf_vars }}
+      tf_vars: ${{ secrets.TF_VARS }}

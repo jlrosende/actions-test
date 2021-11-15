@@ -30,11 +30,11 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Inputs
-        run: echo '${{ inputs.tf_vars }}'
+        run: echo '${{ secrets.tf_vars }}'
 
       - name: Setup env
         run: |
-          vars=$(echo '${{ inputs.tf_vars }}' | jq -r 'to_entries[] | "\(.key)=\(.value)"')
+          vars=$(echo '${{ secrets.tf_vars }}' | jq -r 'to_entries[] | "\(.key)=\(.value)"')
           for v in $vars; 
           do            
             echo $v >> $GITHUB_ENV
