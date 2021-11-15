@@ -30,7 +30,7 @@ jobs:
 
       - name: Setup env
         run: >
-          vars=$(echo "${{ inputs.tf_vars }}" | jq -r 'to_entries[] | "\(.key)=\(.value)"')
+          vars=$(echo '${{ inputs.tf_vars }}' | jq -r 'to_entries[] | "\(.key)=\(.value)"')
           for v in $vars; 
           do            
             echo $v >> $GITHUB_ENV
