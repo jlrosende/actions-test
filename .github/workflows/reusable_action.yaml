@@ -25,17 +25,18 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: GitHub Env Vars
-        run: echo ${{ toJson(github) }}
+      # - name: GitHub Env Vars
+      #   run: echo ${{ toJson(github) }}
 
       - uses: actions/github-script@v5.0.0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const tf_vars = "${{ inputs.tf_vars }}"
+            const info = ${{ toJson(github) }}
             await octokit.request('GET /repositories/{repository_id}/environments/{environment_name}/secrets/{secret_name}', {
-              repository_id: 42,
-              environment_name: 'environment_name',
+              repository_id: info.repository.id,
+              environment_name: ${{ inputs.environment }},
               secret_name: 'secret_name'
             })
             // core.exportVariable('envVar', 'Val');
