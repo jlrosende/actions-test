@@ -15,6 +15,10 @@ on:
         description: Terraform environment
         required: true
         type: string
+    secrets:
+      tf_vars:
+        description: Terraform variables
+        required: false
 
 jobs:
   terraform:
