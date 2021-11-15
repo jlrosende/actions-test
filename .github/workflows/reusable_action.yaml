@@ -6,6 +6,11 @@ on:
         default: ubuntu-latest
         required: false
         type: string
+      tf_vars:
+        description: Terraform variables
+        default: ""
+        required: false
+        type: string
       environment:
         description: Terraform environment
         required: true
@@ -21,14 +26,14 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Inputs
-        run: echo "${{ toJson(inputs) }}"
+        run: echo "${{ toJson(inputs.tf_vars) }}"
 
       - name: GitHub Context
         run: echo "${{ toJson(github) }}"
 
       - name: Setup env
         run: |
-          vars=$(echo "${{ toJson(inputs) }}" | jq -r 'to_entries[] | "\(.key)=\(.value)"')
+          vars=$(echo "${{ toJson(inputs.tf_vars) }}" | jq -r 'to_entries[] | "\(.key)=\(.value)"')
           for v in $vars; do            
             echo $v >> $GITHUB_ENV
           done
