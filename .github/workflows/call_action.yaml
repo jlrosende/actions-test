@@ -10,6 +10,6 @@ jobs:
       environment: pre
       tf_vars: |
         {
-        "TF_VAR_AUTHORIZATION": ${{ secrets.TF_VAR_AUTHORIZATION }},
+        "TF_VAR_AUTHORIZATION": ${{ secrets.AUTHORIZATION }},
         "TF_VAR_PROJECTID": "test-2"
         }
