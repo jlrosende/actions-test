@@ -29,7 +29,7 @@ jobs:
         run: echo '${{ inputs.tf_vars }}'
 
       - name: Setup env
-        run: >
+        run: |
           vars=$(echo '${{ inputs.tf_vars }}' | jq -r 'to_entries[] | "\(.key)=\(.value)"')
           for v in $vars; 
           do            
