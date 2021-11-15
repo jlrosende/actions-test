@@ -37,4 +37,6 @@ jobs:
           done
 
       - name: GitHub Env Vars
-        run: echo "${GITHUB_ENV}"
+        run: |
+          echo $GITHUB_ENV
+          cat $GITHUB_ENV
