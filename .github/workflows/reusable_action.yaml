@@ -27,9 +27,10 @@ jobs:
 
       - uses: actions/github-script@v5.0.0
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            console.log("${{ inputs.tf_vars }}")
+            const tf_vars = "${{ inputs.tf_vars }}"
+            // core.setSecret('myPassword');
+            // core.exportVariable('envVar', 'Val');
 
       - name: GitHub Env Vars
         run: echo ${GITHUB_ENV}
