@@ -31,17 +31,10 @@ jobs:
       - name: GitHub Context
         run: echo "${{ toJson(github) }}"
 
-      - uses: actions/github-script@v5.0.0
+      - name: Setup env
+        uses: jwulf/add-env-vars-action@master
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const tf_vars = "${{ inputs.tf_vars }}"
-            const info = ${{ toJson(github) }}
-            const response = await octokit.request('GET /repositories/{repository_id}/environments/{environment_name}/secrets/{secret_name}', {
-              repository_id: info.repository.id,
-              environment_name: ${{ inputs.environment }},
-              secret_name: 'secret_name'
-            })
+          map: ${{ tojson(inputs) }}
 
       - name: GitHub Env Vars
-        run: echo ${GITHUB_ENV}
+        run: echo "${GITHUB_ENV}""
