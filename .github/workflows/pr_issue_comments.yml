@@ -1,0 +1,25 @@
+name: "[Push pro] Build image and push"
+
+on:
+  push:
+    issue_comment:
+      types:
+        - created
+
+jobs:
+  build_push:
+    name: "Build and push PRO branch"
+    runs-on: ubuntu-latest
+    environment: pro
+
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Get Runner IP
+        run: |
+          curl https://api.ipify.org
+
+      - name: Github Context
+        run: |
+          echo "${{ toJson(github) }}"
+          
