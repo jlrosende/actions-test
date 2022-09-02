@@ -1,10 +1,9 @@
-name: "[Push pro] Build image and push"
+name: "PR/ISSUES Comments"
 
 on:
-  push:
-    issue_comment:
-      types:
-        - created
+  issue_comment:
+    types:
+      - created
 
 jobs:
   build_push:
