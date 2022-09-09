@@ -75,7 +75,5 @@ jobs:
               owner: context.issue.owner,
               repo: context.issue.repo,
               issue_number: context.issue.number,
-              labels: [
-                Object.values(${{ toJson(steps.params.outputs) }})
-              ]
+              labels: Object.values(${{ toJson(steps.params.outputs) }})
             })
