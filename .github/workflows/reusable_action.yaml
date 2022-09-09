@@ -1,0 +1,47 @@
+on:
+  workflow_call:
+    inputs:
+      runner_type:
+        description: Action Runner type
+        default: ubuntu-latest
+        required: false
+        type: string
+      tf_vars:
+        description: Terraform variables
+        default: ""
+        required: false
+        type: string
+      environment:
+        description: Terraform environment
+        required: true
+        type: string
+    secrets:
+      tf_vars:
+        description: Terraform variables
+        required: false
+
+jobs:
+  terraform:
+    name: "Terraform pull request"
+    runs-on: ${{ inputs.runner_type }}
+    environment: ${{ inputs.environment }}
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Inputs
+        run: echo '${{ secrets.tf_vars }}'
+
+      - name: Setup env
+        run: |
+          vars=$(echo '${{ secrets.tf_vars }}' | jq -r 'to_entries[] | "\(.key)=\(.value)"')
+          for v in $vars; 
+          do            
+            echo "::add-mask::${v#*=}"
+            echo $v >> $GITHUB_ENV
+          done
+
+      - name: GitHub Env Vars
+        run: |
+          echo $GITHUB_ENV
+          cat $GITHUB_ENV
