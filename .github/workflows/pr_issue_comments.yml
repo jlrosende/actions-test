@@ -41,7 +41,7 @@ jobs:
           do
             case "$1" in
               -v | --version)     
-                echo "::set-output version=version::release/$2"; 
+                echo "::set-output name=version::release/$2"; 
                 shift 2 ;;
               -e | --env)         
                 echo "::set-output name=env::environment/$2"; 
