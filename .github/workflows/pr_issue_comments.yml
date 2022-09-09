@@ -48,6 +48,7 @@ jobs:
                 shift 2 ;;
               -l | --label)
                 if [ $2 != "auto-approval" && $2 != "manual-approval" ]; then
+                  echo $2 
                   usage
                 fi
                 echo "::set-output name=label::$2"; 
