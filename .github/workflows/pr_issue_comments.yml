@@ -13,7 +13,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      
+
       - name: Get Runner IP
         run: |
           curl https://api.ipify.org
@@ -21,12 +21,12 @@ jobs:
       - name: Github Context
         run: |
           echo "${{ toJson(github) }}"
-        
+
       - name: View attributes
         uses: actions/github-script@v6
         with:
           script: |
-            console.log(github)
-            console.log(context)
-
-          
+            console.log(github.rest)
+            console.log(github.rest.issues)
+            console.log(github.issues)
+            console.log(context.issue)
