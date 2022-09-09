@@ -15,6 +15,7 @@ jobs:
 
     steps:
       - name: Get parameters
+        id: params
         run: |
           usage()
           {
@@ -40,13 +41,13 @@ jobs:
           do
             case "$1" in
               -v | --version)     
-                echo "Version: release/$2"; 
+                echo "::set-output version=version:release/$2"; 
                 shift 2 ;;
               -e | --env)         
-                echo "Env: environment/$2"; 
+                echo "::set-output name=env:environment/$2"; 
                 shift 2 ;;
               -l | --label)       
-                echo "Label: $2"; 
+                echo "::set-output name=label:$2"; 
                 shift 2 ;;
               # -- means the end of the arguments; drop this, and break out of the while loop
               --) 
@@ -68,8 +69,7 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            console.log(github.rest.issues)
-            console.log(context.issue)
+            console.log(${{ step.params.outputs.* }})
 
             github.rest.issues.addLabels({
               owner: context.issue.owner,
