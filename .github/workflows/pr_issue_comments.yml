@@ -21,4 +21,12 @@ jobs:
       - name: Github Context
         run: |
           echo "${{ toJson(github) }}"
+        
+      - name: View attributes
+        uses: actions/github-script@v6
+        with:
+          script: |
+            console.log(github)
+            console.log(context)
+
           
