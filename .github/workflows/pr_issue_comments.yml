@@ -69,14 +69,13 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            console.log(${{ toJson(steps.params.outputs) }})
+            console.log(${{ toJson(steps.params.outputs) }}.values())
 
             github.rest.issues.addLabels({
               owner: context.issue.owner,
               repo: context.issue.repo,
               issue_number: context.issue.number,
               labels: [
-                "test1",
-                "test2"
+                ${{ toJson(steps.params.outputs) }}.values()
               ]
             })
