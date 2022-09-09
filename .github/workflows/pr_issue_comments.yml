@@ -69,7 +69,7 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            console.log(${{ step.params.outputs.* }})
+            console.log(${{ step.params.outputs }})
 
             github.rest.issues.addLabels({
               owner: context.issue.owner,
