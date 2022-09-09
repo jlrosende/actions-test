@@ -24,7 +24,7 @@ jobs:
             exit 2
           }
 
-          params=$(echo "$1" | sed 's/\/deploy-faas//')
+          params=$(echo "${{ github.event.comment.body }}" | sed 's/\/deploy-faas//')
 
           parsed_params=$(getopt -a -o "-v,-e,-l:" -l "version:,env:,label:" -- $params)
 
