@@ -20,13 +20,22 @@ jobs:
 
       - name: Github Context
         run: |
+          echo "${{ github.event.comment.body }}"
           echo "${{ toJson(github) }}"
 
       - name: View attributes
         uses: actions/github-script@v6
         with:
           script: |
-            console.log(github.rest)
             console.log(github.rest.issues)
-            console.log(github.issues)
             console.log(context.issue)
+
+            github.rest.issues.addLabels({
+              owner: context.issue.owner,
+              repo: context.issue.repo,
+              issue_number: context.issue.number,
+              labels: [
+                "test1",
+                "test2"
+              ]
+            })
