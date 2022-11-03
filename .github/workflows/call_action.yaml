@@ -5,4 +5,4 @@ on:
 
 jobs:
   call_job:
-    uses: jlrosende/actions-test/.github/workflows/reusable_action.yaml
+    uses: jlrosende/actions-test/.github/workflows/reusable_action.yaml@master
