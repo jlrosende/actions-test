@@ -27,7 +27,7 @@ jobs:
         with:
           result-encoding: string
           script: |
-            const workflowJobs = await octokit.actions.listJobsForWorkflowRun({
+            const workflowJobs = github.rest.actions.listJobsForWorkflowRun({
               owner: process.env.GITHUB_REPOSITORY_OWNER,
               repo: process.env.GITHUB_REPOSITORY,
               run_id: process.env.GITHUB_RUN_ID,
