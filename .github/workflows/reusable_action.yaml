@@ -21,3 +21,21 @@ jobs:
       - name: Job Context
         run: |
           echo "${{ toJSON(job) }}"
+
+      - uses: actions/github-script@v6
+        id: my-script
+        with:
+          result-encoding: string
+          script: |
+            const workflowJobs = await octokit.actions.listJobsForWorkflowRun({
+              owner: process.env.GITHUB_REPOSITORY_OWNER,
+              repo: process.env.GITHUB_REPOSITORY,
+              run_id: process.env.GITHUB_RUN_ID,
+            });
+
+            workflowJobs.data.jobs.find(
+              (job: Octokit.ActionsListJobsForWorkflowRunResponseJobsItem) =>
+                
+                console.log(job.name)
+                console.log(process.env.GITHUB_JOB)
+            );
