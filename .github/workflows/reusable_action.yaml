@@ -16,8 +16,8 @@ jobs:
       
       - name: GitHub Context
         run: |
-          echo ${{ toJson(github) }}
+          echo ${{ toJSON(github) }}
       
       - name: Job Context
         run: |
-          echo ${{ toJson(job) }}
+          echo ${{ toJSON(job) }}
