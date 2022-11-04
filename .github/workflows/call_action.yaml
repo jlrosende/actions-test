@@ -7,5 +7,17 @@ on:
   workflow_dispatch:
 
 jobs:
-  call_job:
-    uses: jlrosende/actions-test/.github/workflows/reusable_action.yaml@master
+  call_job_1:
+    uses: ./.github/workflows/reusable_action.yaml
+  
+  call_job_2:
+    if: github.ref_name != 'master'
+    uses: ./.github/workflows/reusable_action.yaml
+    
+  notify:
+    runs-on: ubuntu-latest
+    needs: 
+      - call_job_1
+      - call_job_2
+    steps:
+      - run: echo "${{ toJSON(needs.*.result) }}"
