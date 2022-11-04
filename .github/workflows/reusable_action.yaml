@@ -34,7 +34,7 @@ jobs:
               run_id: process.env.GITHUB_RUN_ID
             });
 
-            console.log(workflowJobs)
+            console.log(workflowJobs.data.jobs)
             /*
             workflowJobs.data.jobs.find(
               (job: any) =>
