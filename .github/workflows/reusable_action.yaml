@@ -40,7 +40,7 @@ jobs:
             console.log(workflowJobs.data.jobs)
             console.log("------------------------------------------------------------")
 
-            job = await .actions.getJobForWorkflowRun({
+            job = await github.rest.actions.getJobForWorkflowRun({
               owner: owner,
               repo: repo,
               job_id: process.env.GITHUB_JOB
