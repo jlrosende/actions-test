@@ -3,7 +3,7 @@ on:
  
 jobs:
   printer:
-    name: printer
+    name: Otro nombre no basico
     runs-on: ubuntu-latest
     steps:
 
