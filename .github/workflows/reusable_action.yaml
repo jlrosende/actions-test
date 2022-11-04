@@ -39,19 +39,3 @@ jobs:
             console.log("------------------------------------------------------------")
             console.log(workflowJobs.data.jobs)
             console.log("------------------------------------------------------------")
-
-            job = await github.rest.actions.getJobForWorkflowRun({
-              owner: owner,
-              repo: repo,
-              job_id: process.env.GITHUB_JOB
-            });
-
-            console.log(job)
-            console.log("------------------------------------------------------------")
-
-            /*
-            workflowJobs.data.jobs.find(
-              (job: any) =>
-                console.log(job.name)
-            );
-            */
