@@ -35,8 +35,20 @@ jobs:
               run_id: process.env.GITHUB_RUN_ID
             });
 
-            console.log(workflowJobs.data.jobs)
             console.log(process.env.GITHUB_JOB)
+            console.log("------------------------------------------------------------")
+            console.log(workflowJobs.data.jobs)
+            console.log("------------------------------------------------------------")
+
+            job = await .actions.getJobForWorkflowRun({
+              owner: owner,
+              repo: repo,
+              job_id: process.env.GITHUB_JOB
+            });
+
+            console.log(job)
+            console.log("------------------------------------------------------------")
+
             /*
             workflowJobs.data.jobs.find(
               (job: any) =>
