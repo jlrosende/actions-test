@@ -35,10 +35,10 @@ jobs:
             });
 
             console.log(workflowJobs.data.jobs)
+            console.log(process.env.GITHUB_JOB)
             /*
             workflowJobs.data.jobs.find(
               (job: any) =>
                 console.log(job.name)
-                console.log(process.env.GITHUB_JOB)
             );
             */
