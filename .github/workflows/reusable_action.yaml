@@ -33,11 +33,11 @@ jobs:
               repo: repo,
               run_id: process.env.GITHUB_RUN_ID,
             });
-            
+
             console.log(workflowJobs)
 
-            workflowJobs.data.jobs.find(
-              (job: any) =>
-                console.log(job.name)
-                console.log(process.env.GITHUB_JOB)
-            );
+            # workflowJobs.data.jobs.find(
+            #   (job: any) =>
+            #     console.log(job.name)
+            #     console.log(process.env.GITHUB_JOB)
+            # );
