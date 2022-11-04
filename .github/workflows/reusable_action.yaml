@@ -22,10 +22,6 @@ jobs:
       - name: Job Context
         run: |
           echo "${{ toJSON(job) }}"
-      
-      - name: Jobs Context
-        run: |
-          echo "${{ toJSON(jobs) }}"
 
       - name: Steps Context
         run: |
