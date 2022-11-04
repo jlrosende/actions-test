@@ -27,15 +27,15 @@ jobs:
         with:
           result-encoding: string
           script: |
-            const workflowJobs = github.actions.listJobsForWorkflowRun({
-              owner: process.env.GITHUB_REPOSITORY_OWNER,
-              repo: process.env.GITHUB_REPOSITORY,
+            const [owner, repo] = (process.env.GITHUB_REPOSITORY || "").split("/");
+            const workflowJobs = github.rest.actions.listJobsForWorkflowRun({
+              owner: owner,
+              repo: repo,
               run_id: process.env.GITHUB_RUN_ID,
             });
 
             workflowJobs.data.jobs.find(
-              (job: Octokit.ActionsListJobsForWorkflowRunResponseJobsItem) =>
-                
+              (job: any) =>
                 console.log(job.name)
                 console.log(process.env.GITHUB_JOB)
             );
