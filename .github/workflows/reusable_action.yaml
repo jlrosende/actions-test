@@ -22,6 +22,14 @@ jobs:
       - name: Job Context
         run: |
           echo "${{ toJSON(job) }}"
+      
+      - name: Jobs Context
+        run: |
+          echo "${{ toJSON(jobs) }}"
+
+      - name: Steps Context
+        run: |
+          echo "${{ toJSON(steps) }}"
 
       - uses: actions/github-script@v6
         id: my-script
