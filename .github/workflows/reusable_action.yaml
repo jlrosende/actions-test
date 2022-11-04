@@ -3,6 +3,7 @@ on:
  
 jobs:
   printer:
+    name: printer
     runs-on: ubuntu-latest
     steps:
 
