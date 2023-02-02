@@ -9,4 +9,4 @@ jobs:
     steps:
       - name: Github context
         run: |
-          echo "${{ toJson(github) }}"
+          echo "${RANDOM}"
