@@ -1,7 +1,11 @@
-name: "Workflow Dispatch"
+name: "Workflow Dispatch ${{ inputs.var_1 }}"
 
 on:
   workflow_dispatch:
+    inputs:
+      var_1:
+        description: Variable de prueba
+        type: string
   
 jobs:
   test:
