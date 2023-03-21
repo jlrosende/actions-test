@@ -1,0 +1,12 @@
+
+
+on:
+  push:
+
+jobs:
+  push_event:
+    runs-on: ubuntu-latest
+    name: Push event
+    steps:
+      - name: Print Push event
+        run: echo "${{ toJson(github.event) }}""
