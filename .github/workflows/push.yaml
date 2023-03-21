@@ -3,11 +3,13 @@
 on:
   push:
   pull_request:
+  issue_comment:
+  issues:
 
 jobs:
   push_event:
     runs-on: ubuntu-latest
     name: Event
     steps:
-      - name: Print Push event
+      - name: Print default branch
         run: echo "${{ toJson(github.event.repository.default_branch) }}"
