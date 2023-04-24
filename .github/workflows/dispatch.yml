@@ -14,7 +14,7 @@ jobs:
     steps:
       - name: Github context
         run: |
-          echo "toJSON(github)"
+          echo "${{ toJSON(github) }}"
           
       - name: Random number
         run: |
