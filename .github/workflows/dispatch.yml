@@ -1,4 +1,5 @@
-name: "Workflow Dispatch ${{ inputs.var_1 }}"
+name: "Workflow Dispatch"
+run-name: "Workflow Dispatch ${{ inputs.var_1 }}"
 
 on:
   workflow_dispatch:
