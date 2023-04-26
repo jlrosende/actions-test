@@ -35,9 +35,10 @@ jobs:
           TAG: ${{ inputs.tag || github.head_ref }}
         run: |
           if [[ "${{ startsWith(env.TAG, 'release/') }}" == "false" ]]; then
+            echo "::error title=BAD TAG::ERROR:the tag is not properly formatted release/<tag>"
             exit 1
           fi
-          tag=$(echo "${{ inputs.from || github.head_ref }}" | sed 's|release/||' -)
+          tag=$(echo "${{ inputs.tag || github.head_ref }}" | sed 's|release/||' -)
           echo "new_tag=${tag}" >> $GITHUB_OUTPUT
 
       - name: Create Release
