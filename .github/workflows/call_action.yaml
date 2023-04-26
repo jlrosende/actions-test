@@ -9,16 +9,12 @@ on:
 jobs:
   call_job_1:
     uses: ./.github/workflows/reusable_action.yaml
-  
+    with:
+      tag: "release/1.0.0"
+      from: "master"
+
   call_job_2:
-    if: github.ref_name != 'master'
     uses: ./.github/workflows/reusable_action.yaml
-    
-  notify:
-    if: always()
-    runs-on: ubuntu-latest
-    needs: 
-      - call_job_1
-      - call_job_2
-    steps:
-      - run: echo "${{ toJSON(needs.*.result) }}"
+    with:
+      tag: "1.0.0"
+      from: "master"
