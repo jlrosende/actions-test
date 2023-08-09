@@ -19,13 +19,3 @@ jobs:
       - name: Random number
         run: |
           echo "${RANDOM}"
-
-      - name: Test gh
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
-        run: |
-          gh api \
-            -H "Accept: application/octet-stream" \
-            -H "X-GitHub-Api-Version: 2022-11-28" \
-            /repos/inditex/lib-sisucommonsgh/releases/assets/120755052 > a.tar.gz
-          ls -la
