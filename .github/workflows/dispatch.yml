@@ -14,6 +14,13 @@ jobs:
         run: |
           echo "${{ toJSON(github) }}"
 
+      - name: Install GLIBC
+        run: |
+          dpkg -l | grep libc6
+          apt update
+          apt install libc6
+          dpkg -l | grep libc6
+
       - env:
           GH_TOKEN: ${{ secrets.GH_PAT }}
         run: |
