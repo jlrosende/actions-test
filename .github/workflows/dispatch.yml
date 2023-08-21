@@ -31,8 +31,8 @@ jobs:
           mkdir glibc-2.32-install
           cd build
           ~/glibc/glibc-2.32/configure --prefix=$HOME/glibc/glibc-2.32-install
-          make
-          make install
+          sudo make
+          sudo make install
 
       - name: Install GLIBC
         run: |
