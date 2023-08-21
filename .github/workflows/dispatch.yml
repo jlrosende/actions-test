@@ -16,6 +16,7 @@ jobs:
 
       - name: Install GLIBC
         run: |
+          lld --version
           dpkg -l | grep libc6
           apt update
           apt install libc6
