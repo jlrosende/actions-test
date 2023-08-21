@@ -6,7 +6,7 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
 
@@ -17,10 +17,26 @@ jobs:
       - name: Install GLIBC
         run: |
           ldd --version
-          dpkg -l | grep libc6
-          apt update
-          apt install libc6
-          dpkg -l | grep libc6
+          # dpkg -l | grep libc6
+          # sudo apt update
+          # sudo apt install libc6
+          # dpkg -l | grep libc6
+
+      - name: install GCLIB
+        run: |
+          mkdir $HOME/glibc/ && cd $HOME/glibc
+          wget http://ftp.gnu.org/gnu/libc/glibc-2.32.tar.gz
+          tar -xvzf glibc-2.32.tar.gz
+          mkdir build 
+          mkdir glibc-2.32-install
+          cd build
+          ~/glibc/glibc-2.32/configure --prefix=$HOME/glibc/glibc-2.32-install
+          make
+          make install
+
+      - name: Install GLIBC
+        run: |
+          ldd --version
 
       - env:
           GH_TOKEN: ${{ secrets.GH_PAT }}
