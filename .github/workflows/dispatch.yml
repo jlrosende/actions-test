@@ -1,0 +1,58 @@
+name: "Workflow Dispatch"
+run-name: "Workflow Dispatch ${{ inputs.var_1 }}"
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Github context
+        run: |
+          echo "${{ toJSON(github) }}"
+
+      - name: Install GLIBC
+        run: |
+          ldd --version
+          # dpkg -l | grep libc6
+          # sudo apt update
+          # sudo apt install libc6
+          # dpkg -l | grep libc6
+
+      - name: install GCLIB
+        run: |
+          mkdir $HOME/glibc/ && cd $HOME/glibc
+          wget http://ftp.gnu.org/gnu/libc/glibc-2.32.tar.gz
+          tar -xvzf glibc-2.32.tar.gz
+          mkdir build 
+          mkdir glibc-2.32-install
+          cd build
+          ~/glibc/glibc-2.32/configure --prefix=$HOME/glibc/glibc-2.32-install
+          sudo make
+          sudo make install
+
+      - name: Install GLIBC
+        run: |
+          ldd --version
+
+      - env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+        run: |
+          gh auth status
+
+      - env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+        run: |
+          gh api -H "Accept: application/octet-stream" -H "X-GitHub-Api-Version: 2022-11-28" /repos/inditex/lib-sisucommonsgh/releases/assets/120755052 > a.tar.gz
+
+      - run: |
+          ls -l
+
+      - name: Setup SISU
+        uses: ./.github/actions/setup-sisu
+        with:
+          token: ${{ secrets.GH_PAT }}
+          version: v2.0.0

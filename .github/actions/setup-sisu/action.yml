@@ -1,0 +1,13 @@
+name: "Go action"
+description: "descripcion my tediosa"
+author: "Jorge López Rosende"
+inputs:
+  token:
+    required: true
+    default: ${{ github.token }}
+    description: "The GitHub token to download sisu CMD from repo inditex/lib-sisucommonsgh"
+  version:
+    description: "Version of the binary to download"
+runs:
+  using: "node16"
+  main: "dist/index.js"
