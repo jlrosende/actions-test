@@ -1,5 +1,5 @@
 name: "RELEASE"
-
+run-name: "RELEASE ${{ github.ref_name }} [event: ${{ github.event.action }}]"
 on:
   release: 
 
@@ -8,13 +8,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Github context
+        env:
+          context: ${{ toJSON(github) }}
         run: |
-          echo '${{ toJSON(github) }}'
+          echo "$context"
 
       - name: Github release event
+        env:
+          context: ${{ toJSON(github.event) }}
         run: |
-          echo '${{ toJSON(github.event) }}'
+          echo "$context"
+
 
       - name: Release body
+        env:
+          context: ${{ toJSON(github.event.release.body) }}
         run: |
-          echo '${{ toJSON(github.event.release.body) }}'
+          echo "$context"
+
