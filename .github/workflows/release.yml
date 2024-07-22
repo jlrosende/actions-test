@@ -9,4 +9,12 @@ jobs:
     steps:
       - name: Github context
         run: |
-          echo "${{ toJSON(github) }}"
+          echo '${{ toJSON(github) }}'
+
+      - name: Github release event
+        run: |
+          echo '${{ toJSON(github.event) }}'
+
+      - name: Release body
+        run: |
+          echo '${{ toJSON(github.event.release.body) }}'
