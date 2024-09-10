@@ -19,4 +19,4 @@ jobs:
 
       - name: Print previous output
         run: |
-          echo "${{ steps.color.outputs.color }}""
+          echo "${{ steps.color.outputs.color }}"
