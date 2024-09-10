@@ -1,0 +1,17 @@
+name: "Open Issue"
+
+on:
+  issues:
+    types:
+      - opened
+  issue_comment:
+    types:
+      - created
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Github context
+        run: |
+          echo "${{ toJSON(github) }}"

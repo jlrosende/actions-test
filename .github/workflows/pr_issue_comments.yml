@@ -1,5 +1,23 @@
-#!/bin/bash
-usage()
+name: "PR/ISSUES Comments"
+
+on:
+  issue_comment:
+    types:
+      - created
+
+jobs:
+  build_push:
+    name: "Build and push PRO branch"
+    runs-on: ubuntu-latest
+    environment: pro
+
+    if: startsWith(github.event.comment.body, '/deploy-faas')
+
+    steps:
+      - name: Get parameters
+        id: params
+        run: |
+          usage()
           {
             echo "Usage: alphabet -v | --version VERSION  
                                   -e | --env ENVIRONMENT 
@@ -7,7 +25,7 @@ usage()
             exit 2
           }
 
-          params=$(echo "$1" | sed 's/\/deploy-faas//')
+          params=$(echo "${{ github.event.comment.body }}" | sed 's/\/deploy-faas//')
 
           parsed_params=$(getopt -a -o "-v,-e,-l:" -l "version:,env:,label:" -- $params)
 
@@ -44,3 +62,21 @@ usage()
                 usage ;;
             esac
           done
+
+      - name: Github Context
+        run: |
+          echo "${{ github.event.comment.body }}"
+          echo "${{ toJson(github) }}"
+
+      - name: View attributes
+        uses: actions/github-script@v6
+        with:
+          script: |
+            console.log(Object.values(${{ toJson(steps.params.outputs) }}))
+
+            github.rest.issues.addLabels({
+              owner: context.issue.owner,
+              repo: context.issue.repo,
+              issue_number: context.issue.number,
+              labels: Object.values(${{ toJson(steps.params.outputs) }})
+            })
