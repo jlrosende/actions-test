@@ -14,7 +14,8 @@ jobs:
         id: color
         run: |
           echo "color=RED" >> $GITHUB_OUTPUT
-          false
+          a=$(ls not_exist)
+          echo $a
           exit_code=$?
           echo "exit_code=$exit_code" >> $GITHUB_OUTPUT
           exit $exit_code
