@@ -1,12 +1,20 @@
-name: "Test vars"
+name: "Test"
 
 on:
   push:
+    branches:
+      - master
+  workflow_dispatch:
 
 jobs:
-  pre-pull-request:
-    uses: jlrosende/actions-test/.github/workflows/reusable_action.yaml@dev
+  call_job_1:
+    uses: ./.github/workflows/reusable_action.yaml
     with:
-      environment: pre
-    secrets:
-      tf_vars: ${{ secrets.TF_VARS }}
+      tag: "release/1.0.0"
+      from: "master"
+
+  call_job_2:
+    uses: ./.github/workflows/reusable_action.yaml
+    with:
+      tag: "1.0.0"
+      from: "master"
