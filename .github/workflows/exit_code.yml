@@ -1,0 +1,26 @@
+name: "Exit code"
+
+on:
+  workflow_dispatch:
+
+jobs:
+  exit_code:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Github context
+        continue-on-error: true
+        id: color
+        run: |
+          set +e
+          echo "color=RED" >> $GITHUB_OUTPUT
+          a=$(ls not_exist)
+          exit_code=$?
+          echo "exit_code=$exit_code" >> $GITHUB_OUTPUT
+          exit $exit_code
+
+      - name: Print previous output
+        run: |
+          echo "${{ steps.color.outputs.color }}"
+          echo "${{ steps.color.outputs.exit_code }}"

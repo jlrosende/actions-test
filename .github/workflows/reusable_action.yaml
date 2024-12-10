@@ -1,47 +1,66 @@
+name: "Fan-out"
+
 on:
-  workflow_call:
-    inputs:
-      runner_type:
-        description: Action Runner type
-        default: ubuntu-latest
-        required: false
-        type: string
-      tf_vars:
-        description: Terraform variables
-        default: ""
-        required: false
-        type: string
-      environment:
-        description: Terraform environment
-        required: true
-        type: string
-    secrets:
-      tf_vars:
-        description: Terraform variables
-        required: false
+  workflow_dispatch: 
+  workflow_call:  
 
 jobs:
-  terraform:
-    name: "Terraform pull request"
-    runs-on: ${{ inputs.runner_type }}
-    environment: ${{ inputs.environment }}
-
+  fan-out:
+    runs-on: ubuntu-latest
+    outputs:
+      A-matrix: '[{"type":"a","num":1},{"type":"a","num":2}]'
+      B-matrix: '[{"type":"b","num":1}]'
+      C-matrix: '[]'
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
+      
+  A:
+    if: needs.fan-out.outputs.A-matrix != '[]'
+    name: Exec A
+    needs: 
+      - fan-out
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include: ${{ fromJson(needs.fan-out.outputs.A-matrix) }}
+    steps:
+      - uses: actions/checkout@v4
 
-      - name: Inputs
-        run: echo '${{ secrets.tf_vars }}'
-
-      - name: Setup env
+      - name: Print A 
         run: |
-          vars=$(echo '${{ secrets.tf_vars }}' | jq -r 'to_entries[] | "\(.key)=\(.value)"')
-          for v in $vars; 
-          do            
-            echo "::add-mask::${v#*=}"
-            echo $v >> $GITHUB_ENV
-          done
+          echo "${{ matrix.type }}-${{matrix.num}}"
 
-      - name: GitHub Env Vars
+  B:
+    if: needs.fan-out.outputs.B-matrix != '[]'
+    name: Exec B
+    needs: 
+      - fan-out
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include: ${{ fromJson(needs.fan-out.outputs.B-matrix) }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Print B
         run: |
-          echo $GITHUB_ENV
-          cat $GITHUB_ENV
+          echo "${{ matrix.type }}-${{matrix.num}}"
+
+  C:
+    if: needs.fan-out.outputs.C-matrix != '[]'
+    name: Exec C
+    needs: 
+      - fan-out
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include: ${{ fromJson(needs.fan-out.outputs.C-matrix) }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Print C
+        run: |
+          echo "${{ matrix.type }}-${{matrix.num}}"

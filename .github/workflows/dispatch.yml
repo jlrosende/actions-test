@@ -1,0 +1,13 @@
+name: "Workflow Dispatch"
+run-name: "Workflow Dispatch"
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    uses: ./.github/workflows/reusable_action.yaml
+    strategy:
+      fail-fast: false
+      matrix:
+        a: [1, 2]
