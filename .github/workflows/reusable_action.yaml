@@ -46,7 +46,7 @@ jobs:
           echo "${{ matrix.type }}-${{matrix.num}}"
 
   C:
-    name: Exec A
+    name: Exec C
     needs: 
       - fan-out
     runs-on: ubuntu-lates
