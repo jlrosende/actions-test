@@ -3,8 +3,6 @@ name: "Fan-out"
 on:
   workflow_dispatch: 
 
-permissions: write-all
-
 jobs:
   fan-out:
     runs-on: ubuntu-latest
@@ -12,6 +10,8 @@ jobs:
       A-matrix: '[{"type":"a","num":1},{"type":"a","num":2}]'
       B-matrix: '[{"type":"b","num":1}]'
       C-matrix: '[]'
+    steps:
+      - uses: actions/checkout@v4
       
   A:
     name: Exec A
