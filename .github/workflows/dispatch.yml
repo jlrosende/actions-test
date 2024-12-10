@@ -6,17 +6,8 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-
-      - name: Github context
-        continue-on-error: true
-        id: color
-        run: |
-          echo "color=RED" >> $GITHUB_OUTPUT
-          exit 1
-
-      - name: Print previous output
-        run: |
-          echo "${{ steps.color.outputs.color }}"
+    uses: ./.github/workflows/reusable_action.yaml
+    strategy:
+      fail-fast: false
+      matrix:
+        a: [1, 2]
