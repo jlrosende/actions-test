@@ -1,5 +1,4 @@
-name: "Create Release"
-run-name: "Create Release ${{ inputs.tag || github.head_ref }}"
+name: "Fan-out"
 
 on:
   workflow_dispatch: 
