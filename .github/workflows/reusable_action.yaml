@@ -37,7 +37,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        include: ${{ fromJson(needs.fan-out.outputs.A-matrix) }}
+        include: ${{ fromJson(needs.fan-out.outputs.B-matrix) }}
     steps:
       - uses: actions/checkout@v4
 
@@ -53,7 +53,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        include: ${{ fromJson(needs.fan-out.outputs.A-matrix) }}
+        include: ${{ fromJson(needs.fan-out.outputs.C-matrix) }}
     steps:
       - uses: actions/checkout@v4
 
