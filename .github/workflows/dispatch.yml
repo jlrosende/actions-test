@@ -11,7 +11,7 @@ on:
 
 jobs:
   test:
-    if: inputs.a
+    if: !inputs.a
     uses: ./.github/workflows/reusable_action.yaml
     strategy:
       fail-fast: false
