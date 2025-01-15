@@ -3,9 +3,15 @@ run-name: "Workflow Dispatch"
 
 on:
   workflow_dispatch:
+    inputs:
+      a:
+        type: boolean
+        required: true
+        description: "Check if jobs"
 
 jobs:
   test:
+    if: inputs.a
     uses: ./.github/workflows/reusable_action.yaml
     strategy:
       fail-fast: false
