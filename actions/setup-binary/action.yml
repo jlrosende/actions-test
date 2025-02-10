@@ -1,0 +1,73 @@
+name: "Setup sisusfox"
+description: "Install sisusfox cli"
+author: "Jorge López Rosende"
+inputs:
+  token:
+    required: true
+    default: ${{ github.token }}
+    description: "The GitHub token to download sisu CMD from repo inditex/iac-sisusfox"
+  version:
+    required: true
+    description: "Version of the binary to download"
+runs:
+  using: composite
+  steps:
+    - name: Restore SISUSFOX cache
+      id: cache
+      uses: actions/cache/restore@v4
+      with:
+        path: ${{ runner.tool_cache }}/sisusfox
+        key: sisusfox-${{ inputs.version }}-${{ runner.os }}-${{ runner.arch }}
+
+    - name: Download SISUSFOX for Unix-like
+      if: (runner.os == 'Linux' || runner.os == 'macOS') && (! steps.cache.outputs.cache-hit || steps.cache.outputs.cache-hit == 'false')
+      id: release-unix
+      shell: bash
+      env:
+        GH_TOKEN: ${{ inputs.token }}
+      run: |
+        release_id=$(gh api repos/inditex/iac-sisusfox/releases/tags/${{ inputs.version }} -q '.id')
+
+        version=${{ inputs.version }}
+        os=${{ runner.os == 'Linux' && 'linux' || runner.os == 'macOS' && 'darwin' || 'linux' }}
+        arch=${{ runner.arch == 'X86' && 'amd64' || runner.arch == 'ARM64' && 'arm64' || runner.arch == 'X86' && 'amd64' || 'amd64' }}
+
+        asset_id=$(gh api /repos/inditex/iac-sisusfox/releases/${release_id}/assets | jq --arg NAME "sisusfox-$version-$os-$arch.tar.gz" '.[] | select(.name==$NAME) | .id')
+
+        gh api -H "Accept: application/octet-stream" /repos/inditex/iac-sisusfox/releases/assets/${asset_id} > ${{ runner.temp }}/archive.tar.gz
+
+        tar zxvf ${{ runner.temp }}/archive.tar.gz -C ${{ runner.temp }}/
+
+        mv ${{ runner.temp }}/sisusfox* ${{ runner.temp }}/sisusfox
+
+        echo "${{ runner.temp }}" >> $GITHUB_PATH
+
+    - name: Download SISUSFOX for Windows
+      if: runner.os == 'Windows' && (! steps.cache.outputs.cache-hit || steps.cache.outputs.cache-hit == 'false')
+      id: release-windows
+      shell: bash
+      env:
+        GH_TOKEN: ${{ inputs.token }}
+      run: |
+        release_id=$(gh api repos/inditex/iac-sisusfox/releases/tags/${{ inputs.version }} -q '.id')
+
+        version=${{ inputs.version }}
+        os=${{ runner.os == 'Windows' && 'windows' }}
+        arch=${{ runner.arch == 'X86' && 'amd64' || runner.arch == 'ARM64' && 'arm64' || runner.arch == 'X86' && 'amd64' || 'amd64' }}
+
+        asset_id=$(gh api /repos/inditex/iac-sisusfox/releases/${release_id}/assets | jq --arg NAME "sisusfox-$version-$os-$arch.zip" '.[] | select(.name==$NAME) | .id')
+
+        gh api -H "Accept: application/octet-stream" /repos/inditex/iac-sisusfox/releases/assets/${asset_id} > ${{ runner.temp }}/archive.zip
+
+        tar zxvf ${{ runner.temp }}/archive.tar.gz -C ${{ runner.temp }}/
+
+        mv ${{ runner.temp }}/sisusfox* ${{ runner.temp }}/sisusfox
+
+        echo "${{ runner.temp }}" >> $GITHUB_PATH
+
+    - name: Save SISUSFOX cache
+      if: "! steps.cache.outputs.cache-hit || steps.cache.outputs.cache-hit == 'false'"
+      uses: actions/cache/save@v4
+      with:
+        path: ${{ runner.tool_cache }}/sisusfox
+        key: sisusfox-${{ inputs.version }}-${{ runner.os }}-${{ runner.arch }}

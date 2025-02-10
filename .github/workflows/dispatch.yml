@@ -11,9 +11,17 @@ on:
 
 jobs:
   test:
-    if: ${{ ! inputs.a }}
-    uses: ./.github/workflows/reusable_action.yaml
-    strategy:
-      fail-fast: false
-      matrix:
-        a: [1, 2]
+    # if: ${{ ! inputs.a }}
+    # uses: ./.github/workflows/reusable_action.yaml
+    # strategy:
+    #   fail-fast: false
+    #   matrix:
+    #     a: [1, 2]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Binary
+        uses: ./actions/setup-binary
+        with:
+          token: ${{ secrets.GH_ORG_TOKEN }}
+          version: v0.5.0
+  
