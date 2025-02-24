@@ -24,8 +24,8 @@ jobs:
 
       - name: Test json value
         run: |
-          echo "${{ fromJson('{"foo":"bar"}').baz }}"
-          
+          echo "${{ fromJson('{"foo":"bar"}').baz || 'INFO' }}"
+
       - name: Setup Binary
         uses: ./actions/setup-binary
         with:
