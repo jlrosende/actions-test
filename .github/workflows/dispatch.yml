@@ -21,7 +21,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        
+
+      - name: Test json value
+        run: |
+          echo "${{ fromJson('{"foo":"bar"}').baz }}"
+          
       - name: Setup Binary
         uses: ./actions/setup-binary
         with:
