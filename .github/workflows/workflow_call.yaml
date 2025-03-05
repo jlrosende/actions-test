@@ -17,9 +17,11 @@ jobs:
   workflow_call:
     runs-on: ubuntu-latest
     steps:
-      - run: |
+      - name: toJSON(github.event.inputs)
+        run: |
           echo "${{ toJSON(github.event.inputs) }}"
 
-      - run: |
+      - name: toJSON(inputs)
+        run: |
           echo "${{ toJSON(inputs) }}"
         
