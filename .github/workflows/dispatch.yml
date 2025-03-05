@@ -23,27 +23,27 @@ jobs:
       foo: ${{ inputs.foo }}
       bar: ${{ inputs.bar }}
 
-  test:
-    environment: staging
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+  # test:
+  #   environment: staging
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v4
   
-  run-if-accetp:
-    needs: 
-      - test
-    runs-on: ubuntu-latest
-    steps:
-      - run: |
-          echo "${{ needs.test.result }}"
+  # run-if-accetp:
+  #   needs: 
+  #     - test
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - run: |
+  #         echo "${{ needs.test.result }}"
 
-  run-if-cancel:
-    if: ${{ ! cancelled() }}
-    needs: 
-      - test
-    runs-on: ubuntu-latest
-    steps:
-      - run: |
-          echo "${{ needs.test.result }}"
+  # run-if-cancel:
+  #   if: ${{ ! cancelled() }}
+  #   needs: 
+  #     - test
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - run: |
+  #         echo "${{ needs.test.result }}"
 
