@@ -2,6 +2,9 @@ name: "Workflow Dispatch"
 run-name: "Workflow Dispatch"
 
 on:
+  schedule: 
+    - cron: "* * * * *"
+
   workflow_dispatch:
     inputs:
       foo:
@@ -12,9 +15,6 @@ on:
         default: baz
         type: string
         required: false
-
-  schedule:
-    - cron: "* * * * *"
 
 jobs:
   remote:
