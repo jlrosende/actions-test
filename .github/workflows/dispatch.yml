@@ -2,8 +2,8 @@ name: "Workflow Dispatch"
 run-name: "Workflow Dispatch"
 
 on:
-  schedule: 
-    - cron: "* * * * *"
+  # schedule: 
+  #   - cron: "* * * * *"
 
   workflow_dispatch:
     inputs:
