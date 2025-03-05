@@ -3,6 +3,15 @@ run-name: "Workflow Dispatch"
 
 on:
   workflow_dispatch:
+    inputs:
+      foo:
+        default: bar
+        type: string
+        required: true
+      bar:
+        default: baz
+        type: string
+        required: false
 
   schedule:
     - cron: "* * * * *"
@@ -11,7 +20,8 @@ jobs:
   remote:
     uses: ./.github/workflows/workflow_call.yaml
     with:
-      foo: bar
+      foo: ${{ inputs.foo }}
+      bar: ${{ inputs.bar }}
 
   test:
     environment: staging
