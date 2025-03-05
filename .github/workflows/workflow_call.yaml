@@ -1,0 +1,25 @@
+name: "workflow_call"
+
+on:
+  workflow_call:  
+    inputs:
+      foo:
+        default: bar
+        type: string
+        required: true
+      bar:
+        default: baz
+        type: string
+        required: false
+        
+
+jobs:
+  workflow_call:
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "${{ toJSON(github.event.inputs) }}"
+
+      - run: |
+          echo "${{ toJSON(inputs) }}"
+        

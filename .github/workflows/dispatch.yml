@@ -4,7 +4,15 @@ run-name: "Workflow Dispatch"
 on:
   workflow_dispatch:
 
+  schedule:
+    - cron: "*/1 * * * *"
+
 jobs:
+  remote:
+    uses: ./.github/workflows/workflow_call.yaml
+    with:
+      foo: bar
+      
   test:
     environment: staging
     runs-on: ubuntu-latest
