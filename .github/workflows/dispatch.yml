@@ -20,8 +20,8 @@ jobs:
   remote:
     uses: ./.github/workflows/workflow_call.yaml
     with:
-      foo: ${{ inputs.foo }}
-      bar: ${{ inputs.bar }}
+      foo: ${{ inputs.foo || 'bar' }}
+      bar: ${{ inputs.bar || 'bazzzzz' }}
 
   # test:
   #   environment: staging
