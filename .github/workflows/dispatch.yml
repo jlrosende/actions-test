@@ -5,14 +5,14 @@ on:
   workflow_dispatch:
 
   schedule:
-    - cron: "*/1 * * * *"
+    - cron: "* * * * *"
 
 jobs:
   remote:
     uses: ./.github/workflows/workflow_call.yaml
     with:
       foo: bar
-      
+
   test:
     environment: staging
     runs-on: ubuntu-latest
