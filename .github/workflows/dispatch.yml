@@ -45,10 +45,15 @@ jobs:
       - manual-promotion
       - e2e
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        exit: 
+          - 0
+          - ${{ inputs.promote-exit }}
     steps:
       - run: |
           sleep 10
-          exit ${{ inputs.promote-exit }} 
+          exit ${{ matrix.exit }} 
           echo "${{ needs.manual-promotion.result }}"
 
   rollback-staging:
