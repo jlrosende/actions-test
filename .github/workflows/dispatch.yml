@@ -35,9 +35,12 @@ jobs:
       - test
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout the repo
+        uses: actions/checkout@v4
+
       - run: |
           echo "${{ needs.test.result }}"
-          
+
       - env:
           GITHUB_TOKEN: ${{ github.token }}
           version: v1.0.4
@@ -51,6 +54,9 @@ jobs:
       - test
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout the repo
+        uses: actions/checkout@v4
+        
       - run: |
           echo "${{ needs.test.result }}"
 
