@@ -10,6 +10,10 @@ on:
       exit:
         type: string
         required: true
+      promote-exit:
+        type: string
+        required: true
+        default: "0"
 
 jobs:
   # remote:
@@ -43,6 +47,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: |
+          sleep 10
           echo "${{ needs.manual-promotion.result }}"
 
   rollback-staging:
