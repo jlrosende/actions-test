@@ -37,6 +37,13 @@ jobs:
     steps:
       - run: |
           echo "${{ needs.test.result }}"
+          
+      - env:
+          GITHUB_TOKEN: ${{ github.token }}
+          version: v1.0.4
+        run: |
+          echo "${{ needs.test.result }}"
+          gh release view $version --json tagName -q .tagName
 
   run-if-cancel:
     if: ${{ ! cancelled() && needs.test.result != 'success' }}
@@ -46,4 +53,11 @@ jobs:
     steps:
       - run: |
           echo "${{ needs.test.result }}"
+
+      - env:
+          GITHUB_TOKEN: ${{ github.token }}
+          version: v1.0.4
+        run: |
+          echo "${{ needs.test.result }}"
+          gh release view $version --json tagName -q .tagName
 
