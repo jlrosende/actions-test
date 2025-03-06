@@ -48,6 +48,7 @@ jobs:
     steps:
       - run: |
           sleep 10
+          exit ${{ inputs.promote-exit }} 
           echo "${{ needs.manual-promotion.result }}"
 
   rollback-staging:
