@@ -23,47 +23,40 @@ jobs:
   #     foo: ${{ inputs.foo || 'bar' }}
   #     bar: ${{ inputs.bar || 'bazzzzz' }}
 
-  test:
+  e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - run: exit 1 -> error
+      # - run: exit 0 -> ok
+
+  manual-promotion:
+    if: ${{ ! cancelled() && needs.e2e.result != 'success' }}
+    needs: 
+      - e2e
     environment: staging
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+  promote:
+    if: ${{ ! cancelled() && (needs.manual-promotion.result != 'success' || needs.e2e.result == 'success') }}
+    needs: 
+      - manual-promotion
+      - e2e
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "${{ needs.manual-promotion.result }}"
+
+  rollback:
+    if: ${{ ! cancelled() && needs.manual-promotion.result != 'success' }}
+    needs: 
+      - manual-promotion
+    runs-on: ubuntu-latest
+    steps:
+
+      - run: |
+          echo "${{ needs.manual-promotion.result }}"
+
   
-  run-if-accetp:
-    needs: 
-      - test
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout the repo
-        uses: actions/checkout@v4
-
-      - run: |
-          echo "${{ needs.test.result }}"
-
-      - env:
-          GITHUB_TOKEN: ${{ github.token }}
-          version: v1.0.4
-        run: |
-          echo "${{ needs.test.result }}"
-          gh release view $version --json tagName -q .tagName
-
-  run-if-cancel:
-    if: ${{ ! cancelled() && needs.test.result != 'success' }}
-    needs: 
-      - test
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout the repo
-        uses: actions/checkout@v4
-        
-      - run: |
-          echo "${{ needs.test.result }}"
-
-      - env:
-          GITHUB_TOKEN: ${{ github.token }}
-          version: v1.0.4
-        run: |
-          echo "${{ needs.test.result }}"
-          gh release view $version --json tagName -q .tagName
-
