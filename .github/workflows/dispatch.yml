@@ -36,8 +36,7 @@ jobs:
     environment: staging
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - run: echo "Validate promotion"
 
   promote:
     if: ${{ ! cancelled() && (needs.manual-promotion.result == 'success' || needs.e2e.result == 'success') }}
