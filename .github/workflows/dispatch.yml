@@ -49,7 +49,7 @@ jobs:
           echo "${{ needs.manual-promotion.result }}"
 
   rollback:
-    if: ${{ ! cancelled() && needs.manual-promotion.result != 'success' }}
+    if: ${{ ! cancelled() && needs.manual-promotion.result == 'falied' }}
     needs: 
       - manual-promotion
     runs-on: ubuntu-latest
