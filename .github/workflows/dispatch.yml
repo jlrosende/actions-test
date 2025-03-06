@@ -7,14 +7,9 @@ on:
 
   workflow_dispatch:
     inputs:
-      foo:
-        default: bar
+      exit:
         type: string
         required: true
-      bar:
-        default: baz
-        type: string
-        required: false
 
 jobs:
   # remote:
@@ -29,7 +24,7 @@ jobs:
       # - run: exit 1 # -> error
       - run: |
           sleep 10
-          exit 0 # -> ok
+          exit ${{ inputs.exit }} 
 
   manual-promotion:
     if: ${{ ! cancelled() && needs.e2e.result != 'success' }}
