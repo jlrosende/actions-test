@@ -17,33 +17,33 @@ on:
         required: false
 
 jobs:
-  remote:
-    uses: ./.github/workflows/workflow_call.yaml
-    with:
-      foo: ${{ inputs.foo || 'bar' }}
-      bar: ${{ inputs.bar || 'bazzzzz' }}
+  # remote:
+  #   uses: ./.github/workflows/workflow_call.yaml
+  #   with:
+  #     foo: ${{ inputs.foo || 'bar' }}
+  #     bar: ${{ inputs.bar || 'bazzzzz' }}
 
-  # test:
-  #   environment: staging
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Checkout
-  #       uses: actions/checkout@v4
+  test:
+    environment: staging
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
   
-  # run-if-accetp:
-  #   needs: 
-  #     - test
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - run: |
-  #         echo "${{ needs.test.result }}"
+  run-if-accetp:
+    needs: 
+      - test
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "${{ needs.test.result }}"
 
-  # run-if-cancel:
-  #   if: ${{ ! cancelled() }}
-  #   needs: 
-  #     - test
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - run: |
-  #         echo "${{ needs.test.result }}"
+  run-if-cancel:
+    if: ${{ ! cancelled() && needs.test.result != 'success' }}
+    needs: 
+      - test
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "${{ needs.test.result }}"
 
