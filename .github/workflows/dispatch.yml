@@ -27,7 +27,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       # - run: exit 1 # -> error
-      - run: exit 0 # -> ok
+      - run: |
+          sleep 10
+          exit 0 # -> ok
 
   manual-promotion:
     if: ${{ ! cancelled() && needs.e2e.result != 'success' }}
