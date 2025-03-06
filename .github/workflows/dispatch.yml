@@ -40,7 +40,7 @@ jobs:
     steps:
       - run: echo "Validate promotion"
 
-  promote:
+  promote-staging-to-active:
     if: ${{ ! cancelled() && (needs.manual-promotion.result == 'success' || needs.e2e.result == 'success') }}
     needs: 
       - manual-promotion
@@ -50,14 +50,22 @@ jobs:
       - run: |
           echo "${{ needs.manual-promotion.result }}"
 
-  rollback:
-    if: ${{ ! cancelled() && needs.manual-promotion.result == 'falied' }}
+  rollback-staging:
+    if: ${{ always() && (needs.manual-promotion.result == 'falied' || needs.promote-staging-to-active.result != 'success') }}
     needs: 
       - manual-promotion
+      - promote-staging-to-active
     runs-on: ubuntu-latest
     steps:
-
       - run: |
           echo "${{ needs.manual-promotion.result }}"
 
+  rollback-active:
+    if: ${{ always() && needs.promote-staging-to-active.result != 'success' }}
+    needs: 
+      - promote-staging-to-active
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "${{ needs.promote-staging-to-active.result }}"
   
