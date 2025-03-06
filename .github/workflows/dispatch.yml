@@ -40,7 +40,7 @@ jobs:
         uses: actions/checkout@v4
 
   promote:
-    if: ${{ ! cancelled() && (needs.manual-promotion.result != 'success' || needs.e2e.result == 'success') }}
+    if: ${{ ! cancelled() && (needs.manual-promotion.result == 'success' || needs.e2e.result == 'success') }}
     needs: 
       - manual-promotion
       - e2e
