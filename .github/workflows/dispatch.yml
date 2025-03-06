@@ -52,7 +52,7 @@ jobs:
           echo "${{ needs.manual-promotion.result }}"
 
   rollback-staging:
-    if: ${{ always() && (needs.manual-promotion.result == 'failure' || needs.promote-staging-to-active.result != 'success') }}
+    if: ${{ always() && (needs.manual-promotion.result == 'falied' || needs.promote-staging-to-active.result != 'success') }}
     needs: 
       - manual-promotion
       - promote-staging-to-active
@@ -62,9 +62,10 @@ jobs:
           echo "${{ needs.manual-promotion.result }}"
 
   rollback-active:
-    if: ${{ always() && contains(fromJSON('["failure", "cancelled"]'), needs.promote-staging-to-active.result) }}
+    if: ${{ always() && needs.promote-staging-to-active.result != 'success' && needs.e2e.result != 'cancelled' }}
     needs: 
       - promote-staging-to-active
+      - e2e
     runs-on: ubuntu-latest
     steps:
       - run: |
