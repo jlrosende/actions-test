@@ -1,0 +1,54 @@
+on:
+  push: 
+    tags: 
+      - "v*.*.*"
+      - "*.*.*"
+
+jobs:
+  aditional_tags:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+          fetch-tags: true
+
+      - name: Tag components
+        id: tag
+        env:
+          INPUT: ${{ github.ref_name }}
+        run: |
+          # Regex for a semver digit
+          D='0|[1-9][0-9]*'
+          # Regex for a semver pre-release word
+          PW='[0-9]*[a-zA-Z-][0-9a-zA-Z-]*'
+          # Regex for a semver build-metadata word
+          MW='[0-9a-zA-Z-]+'
+
+          if [[ $INPUT == v* ]]
+          then
+            PREFIX=v
+          fi
+
+          INPUT=${INPUT#v}
+
+          if [[ "$INPUT" =~ ^($D)\.($D)\.($D)(-(($D|$PW)(\.($D|$PW))*))?(\+($MW(\.$MW)*))?$ ]]; then
+              MAJOR="${BASH_REMATCH[1]}"
+              MINOR="${BASH_REMATCH[2]:-""}"
+              PATCH="${BASH_REMATCH[3]:-""}"
+              PRE_RELEASE="${BASH_REMATCH[5]:-""}"
+              BUILD_METADATA="${BASH_REMATCH[10]:-""}"
+          fi
+
+          echo "prefix=$PREFIX" >> $GITHUB_OUTPUT
+          echo "mayor=$MAJOR" >> $GITHUB_OUTPUT
+          echo "minor=$MINOR" >> $GITHUB_OUTPUT
+          echo "pathc=$PATCH" >> $GITHUB_OUTPUT
+          echo "pre-release=$PRE_RELEASE" >> $GITHUB_OUTPUT
+          echo "build=$BUILD_METADATA" >> $GITHUB_OUTPUT
+      
+      - name: Push tags
+        run: |
+          git tag ${{ steps.tag.outputs.prefix }}${{ steps.tag.outputs.mayor }} -f
+          git tag ${{ steps.tag.outputs.prefix }}${{ steps.tag.outputs.mayor }}.${{ steps.tag.outputs.minor }} -f
+          git push --tags --force
