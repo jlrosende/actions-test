@@ -16,6 +16,8 @@ jobs:
           echo "${{ toJSON(github) }}"
 
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
 
       - run: |
           git config user.name "${{ github.actor }}"
@@ -26,7 +28,7 @@ jobs:
 
       - run: | 
           git add .
-          
+
       - run: | 
           git commit -a -m "RANDOM"
 
