@@ -1,0 +1,23 @@
+# action.yml
+name: "Python"
+description: ""
+inputs:
+  args: # id of input
+    description: ""
+    required: true
+runs:
+  using: "composite"
+  steps:
+    - name: Install Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.11"
+
+    - name: Install Dependencies
+      shell: bash
+      run: pip install -r ${{ github.action_path }}/requirements.txt
+
+    - name: Fetch the number's square
+      shell: bash
+      run: |
+        python ${{ github.action_path }}/main.py ${{ inputs.args }}

@@ -1,0 +1,29 @@
+name: run-script
+
+on:
+  issue_comment:
+    types:
+      - created
+      - edited
+
+env:
+  ISSUE_BODY: ${{ github.event.comment.body ||  github.event.issue.body }}
+
+jobs:
+  smart-repo:
+    if: startsWith(github.event.comment.body ||  github.event.issue.body, '/run-script ')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Parse command
+        id: command
+        run: |
+          args=$( echo "${{ env.ISSUE_BODY }}" | sed 's|/smartrepo ||' | tr -d "\n\r" )
+          echo "args=$args" >> "$GITHUB_OUTPUT"
+
+      - name: Send query
+        uses: jlrosende/actions-test/actions/run-script@master
+        with:
+          args: ${{ steps.command.outputs.args }}
