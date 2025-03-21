@@ -17,6 +17,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Github context
+        run: |
+          echo "${{ toJSON(github) }}"
+
       - name: Parse command
         id: command
         run: |
