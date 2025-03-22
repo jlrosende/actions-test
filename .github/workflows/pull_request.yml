@@ -3,12 +3,7 @@ run-name: "PR event.action: ${{ github.event.action }}"
 
 on:
   pull_request:
-    types: 
-      - opened
-      - reopened
-      - edited
-      - synchronize
-      - closed
+    
     branches:
       - master
 
@@ -19,3 +14,23 @@ jobs:
       - name: Github context
         run: |
           echo "${{ toJSON(github) }}"
+
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+
+      - run: |
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor }}@users.noreply.github.com"
+      
+      - run: |
+         echo "${RANDOM}" > RANDOM.md
+
+      - run: | 
+          git add .
+
+      - run: | 
+          git commit -a -m "RANDOM"
+
+      - run: | 
+          git push
