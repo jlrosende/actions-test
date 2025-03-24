@@ -2,6 +2,7 @@ name: Repository Dispatch
 on:
   repository_dispatch:
     types: [my-check]
+    
 jobs:
   myEvent:
     runs-on: ubuntu-latest
