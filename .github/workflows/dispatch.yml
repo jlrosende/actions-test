@@ -27,6 +27,11 @@ jobs:
     steps:
       # - run: exit 1 # -> error
       - run: |
+          curl -sSL https://bit.ly/install-xq | sudo bash
+          
+      - run: xq --version
+
+      - run: |
           sleep 10
           exit ${{ inputs.exit }} 
 
