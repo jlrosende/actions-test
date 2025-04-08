@@ -2,65 +2,23 @@ name: "Fan-out"
 
 on:
   workflow_dispatch: 
-  workflow_call:  
 
 jobs:
   fan-out:
     runs-on: ubuntu-latest
     outputs:
-      A-matrix: '[{"type":"a","num":1},{"type":"a","num":2}]'
-      B-matrix: '[{"type":"b","num":1}]'
-      C-matrix: '[]'
+      check: ${{ steps.check.outputs.num }}
+    strategy:
+      matrix:
+        num: [0,1]
     steps:
-      - uses: actions/checkout@v4
-      
-  A:
-    if: needs.fan-out.outputs.A-matrix != '[]'
-    name: Exec A
+      - id: check
+        run: echo "num=${{ matrix.num }}" >> $GITHUB_OUTPUT
+    
+  result:
+    runs-on: ubuntu-latest
     needs: 
       - fan-out
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        include: ${{ fromJson(needs.fan-out.outputs.A-matrix) }}
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Print A 
-        run: |
-          echo "${{ matrix.type }}-${{matrix.num}}"
-
-  B:
-    if: needs.fan-out.outputs.B-matrix != '[]'
-    name: Exec B
-    needs: 
-      - fan-out
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        include: ${{ fromJson(needs.fan-out.outputs.B-matrix) }}
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Print B
-        run: |
-          echo "${{ matrix.type }}-${{matrix.num}}"
-
-  C:
-    if: needs.fan-out.outputs.C-matrix != '[]'
-    name: Exec C
-    needs: 
-      - fan-out
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        include: ${{ fromJson(needs.fan-out.outputs.C-matrix) }}
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Print C
-        run: |
-          echo "${{ matrix.type }}-${{matrix.num}}"
+      - run: echo "${{ needs.fan-out.outputs.check }}"
+ 
