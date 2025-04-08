@@ -13,7 +13,9 @@ jobs:
         num: [0,1]
     steps:
       - id: check
-        run: echo "num=${{ matrix.num }}" >> $GITHUB_OUTPUT
+        run: |
+          if [[ "0" -eq "${{ matrix.num }}" ]]; then
+            echo "num=${{ matrix.num }}" >> $GITHUB_OUTPUT
     
   result:
     runs-on: ubuntu-latest
