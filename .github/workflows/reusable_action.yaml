@@ -10,11 +10,12 @@ jobs:
       check: ${{ steps.check.outputs.num }}
     strategy:
       matrix:
-        num: [0,1]
+        num: [10,15]
     steps:
       - id: check
         run: |
-          if [[ "0" -eq "${{ matrix.num }}" ]]; then
+          sleep ${{ matrix.num }}
+          if [[ "10" -eq "${{ matrix.num }}" ]]; then
             echo "num=${{ matrix.num }}" >> $GITHUB_OUTPUT
           fi
     
