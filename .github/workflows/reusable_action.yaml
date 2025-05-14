@@ -10,7 +10,10 @@ jobs:
       check: ${{ steps.check.outputs.num }}
     strategy:
       matrix:
-        num: [10,15]
+        include:
+          - num: 10
+          - num: 10
+          - num: 15
     steps:
       - id: check
         run: |
