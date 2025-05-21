@@ -16,7 +16,7 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            if (context.payload.comment.user.login === 'dend' && context.payload.comment.body.trim() === '/approved') {
+            if (context.payload.comment.user.login === 'jlrosende' && context.payload.comment.body.trim() === '/approved') {
               core.setOutput('approved', 'true');
             } else {
               core.setOutput('approved', 'false');
