@@ -9,8 +9,6 @@ on:
       - edited
       - synchronize
       - closed
-    branches:
-      - master
 
 jobs:
   test:
