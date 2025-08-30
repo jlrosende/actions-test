@@ -16,69 +16,79 @@ on:
         default: "0"
 
 jobs:
+  docker-action:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ./actions/docker
+
+      - uses: ./actions/cache
+
+      
   # remote:
   #   uses: ./.github/workflows/workflow_call.yaml
   #   with:
   #     foo: ${{ inputs.foo || 'bar' }}
   #     bar: ${{ inputs.bar || 'bazzzzz' }}
 
-  e2e:
-    runs-on: ubuntu-latest
-    steps:
-      # - run: exit 1 # -> error
-      - run: |
-          curl -sSL https://bit.ly/install-xq | sudo bash
+  # e2e:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     # - run: exit 1 # -> error
+  #     - run: |
+  #         curl -sSL https://bit.ly/install-xq | sudo bash
           
-      - run: xq --version
+  #     - run: xq --version
 
-      - run: |
-          sleep 10
-          exit ${{ inputs.exit }} 
+  #     - run: |
+  #         sleep 10
+  #         exit ${{ inputs.exit }} 
 
-  manual-promotion:
-    if: ${{ ! cancelled() && needs.e2e.result != 'success' }}
-    needs: 
-      - e2e
-    environment: staging
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo "Validate promotion"
+  # manual-promotion:
+  #   if: ${{ ! cancelled() && needs.e2e.result != 'success' }}
+  #   needs: 
+  #     - e2e
+  #   environment: staging
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - run: echo "Validate promotion"
 
-  promote-staging-to-active:
-    if: ${{ ! cancelled() && (needs.manual-promotion.result == 'success' || needs.e2e.result == 'success') }}
-    needs: 
-      - manual-promotion
-      - e2e
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        exit: 
-          - 0
-          - ${{ inputs.promote-exit }}
-    steps:
-      - run: |
-          sleep 10
-          exit ${{ matrix.exit }} 
-          echo "${{ needs.manual-promotion.result }}"
+  # promote-staging-to-active:
+  #   if: ${{ ! cancelled() && (needs.manual-promotion.result == 'success' || needs.e2e.result == 'success') }}
+  #   needs: 
+  #     - manual-promotion
+  #     - e2e
+  #   runs-on: ubuntu-latest
+  #   strategy:
+  #     matrix:
+  #       exit: 
+  #         - 0
+  #         - ${{ inputs.promote-exit }}
+  #   steps:
+  #     - run: |
+  #         sleep 10
+  #         exit ${{ matrix.exit }} 
+  #         echo "${{ needs.manual-promotion.result }}"
 
-  rollback-staging:
-    if: ${{ always() && (needs.manual-promotion.result == 'failure' || needs.promote-staging-to-active.result != 'success') }}
-    needs: 
-      - manual-promotion
-      - promote-staging-to-active
-    runs-on: ubuntu-latest
-    steps:
-      - run: |
-          echo "${{ needs.manual-promotion.result }}"
+  # rollback-staging:
+  #   if: ${{ always() && (needs.manual-promotion.result == 'failure' || needs.promote-staging-to-active.result != 'success') }}
+  #   needs: 
+  #     - manual-promotion
+  #     - promote-staging-to-active
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - run: |
+  #         echo "${{ needs.manual-promotion.result }}"
 
-  rollback-active:
-    if: ${{ always() && needs.promote-staging-to-active.result != 'success' && needs.e2e.result != 'cancelled' && needs.manual-promotion.result != 'failure' }}
-    needs: 
-      - promote-staging-to-active
-      - e2e
-      - manual-promotion
-    runs-on: ubuntu-latest
-    steps:
-      - run: |
-          echo "${{ needs.promote-staging-to-active.result }}"
+  # rollback-active:
+  #   if: ${{ always() && needs.promote-staging-to-active.result != 'success' && needs.e2e.result != 'cancelled' && needs.manual-promotion.result != 'failure' }}
+  #   needs: 
+  #     - promote-staging-to-active
+  #     - e2e
+  #     - manual-promotion
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - run: |
+  #         echo "${{ needs.promote-staging-to-active.result }}"
   

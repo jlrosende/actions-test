@@ -1,0 +1,22 @@
+name: "Setup sisusfox"
+description: "Install sisusfox cli"
+author: "Jorge López Rosende"
+runs:
+  using: composite
+  steps:
+    - name: Restore cache
+      id: cache
+      uses: actions/cache/restore@v4
+      with:
+        path: ${{ runner.tool_cache }}/sisusfox
+        key: memoruy
+
+    - name: Run docker action
+      uses: ./actions/docker
+
+    - name: Save  cache
+      if: "! steps.cache.outputs.cache-hit || steps.cache.outputs.cache-hit == 'false'"
+      uses: actions/cache/save@v4
+      with:
+        path: ${{ runner.tool_cache }}/sisusfox
+        key: sisusfox-${{ inputs.version }}-${{ runner.os }}-${{ runner.arch }}
