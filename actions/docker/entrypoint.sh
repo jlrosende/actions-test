@@ -7,10 +7,9 @@ ls -la /github/home
 echo "--------------------------------"
 
 uv tool install basic-memory
-uv tool update-shell
 echo "--------------------------------"
 
-echo "# My Note\n\nThis is a test note" | basic-memory tool write-note \
+echo "# My Note\n\nThis is a test note" | uvx basic-memory tool write-note \
   --title "Test Note" --folder "notes"
 echo "--------------------------------"
 
