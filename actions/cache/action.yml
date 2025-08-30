@@ -17,5 +17,5 @@ runs:
     - name: Save  cache
       uses: actions/cache/save@v4
       with:
-        path: /home/runner/work/_temp/_github_home
+        path: /home/runner/work/_temp/_github_home/cache
         key: memory
