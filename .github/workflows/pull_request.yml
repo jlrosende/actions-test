@@ -6,7 +6,6 @@ on:
     types: 
       - opened
       - reopened
-      - edited
       - synchronize
       - closed
 
@@ -16,6 +15,7 @@ jobs:
     steps:
       - name: Github context
         run: |
+          echo "${{ github.event.action }}"
           echo "${{ toJSON(github) }}"
 
       - name: Github context
