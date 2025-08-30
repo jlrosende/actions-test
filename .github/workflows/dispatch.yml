@@ -6,14 +6,14 @@ on:
   #   - cron: "* * * * *"
 
   workflow_dispatch:
-    inputs:
-      exit:
-        type: string
-        required: true
-      promote-exit:
-        type: string
-        required: true
-        default: "0"
+    # inputs:
+    #   exit:
+    #     type: string
+    #     required: true
+    #   promote-exit:
+    #     type: string
+    #     required: true
+    #     default: "0"
 
 jobs:
   docker-action:
@@ -25,7 +25,7 @@ jobs:
 
       - uses: ./actions/cache
 
-      
+
   # remote:
   #   uses: ./.github/workflows/workflow_call.yaml
   #   with:
