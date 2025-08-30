@@ -1,8 +1,6 @@
 #!/bin/bash
 
-echo "hola $1"
-
-env
+getent passwd $USER
 
 echo "/github"
 ls -la /github
