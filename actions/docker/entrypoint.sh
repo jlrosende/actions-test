@@ -26,3 +26,14 @@ echo "--------------------------------"
 echo "/github/home"
 ls -la /github/home
 echo "--------------------------------"
+
+echo "/github/home/basic-memory"
+ls -la /github/home/basic-memory
+echo "--------------------------------"
+
+
+echo "/github/home/.basic-memory"
+ls -la /github/home/.basic-memory
+echo "--------------------------------"
+
+cat /github/home/.basic-memory/config.json
