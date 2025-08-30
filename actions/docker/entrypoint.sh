@@ -17,3 +17,8 @@ echo "--------------------------------"
 echo "/github/file_commands"
 ls -la /github/file_commands
 echo "--------------------------------"
+
+mkdir -p cache
+touch "/github/home/cache/$(date)"
+
+ls /github/home/cache

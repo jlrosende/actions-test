@@ -8,15 +8,14 @@ runs:
       id: cache
       uses: actions/cache/restore@v4
       with:
-        path: ${{ runner.tool_cache }}/sisusfox
-        key: memoruy
+        path: /home/runner/work/_temp/_github_home/cache
+        key: memory
 
     - name: Run docker action
       uses: ./actions/docker
 
     - name: Save  cache
-      if: "! steps.cache.outputs.cache-hit || steps.cache.outputs.cache-hit == 'false'"
       uses: actions/cache/save@v4
       with:
-        path: ${{ runner.tool_cache }}/sisusfox
-        key: sisusfox-${{ inputs.version }}-${{ runner.os }}-${{ runner.arch }}
+        path: /home/runner/work/_temp/_github_home
+        key: memory
