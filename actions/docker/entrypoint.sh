@@ -1,6 +1,10 @@
 #!/bin/bash
 
 getent passwd $USER
+echo "--------------------------------"
+
+env
+echo "--------------------------------"
 
 echo "/github/home"
 ls -la /github/home
